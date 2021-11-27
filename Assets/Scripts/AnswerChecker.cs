@@ -19,8 +19,6 @@ public class AnswerChecker : MonoBehaviour
 
     [SerializeField]
     private TapOnWrongSymbolEvent _tapOnWrongSymbolEvent;
-
-    
     
     public List<SimpleSymbol> AvailableSymbols { get; private set; }
 

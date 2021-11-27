@@ -1,7 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using SettingsScripts;
 using UnityEngine;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
@@ -18,6 +18,7 @@ public struct SimpleSymbol
 
 public class SymbolsManager : MonoBehaviour
 {
+    #region EventsClasses
     [Serializable]
     public class AlphabetUpdatedEvent : UnityEvent<List<SimpleSymbol>>
     {
@@ -32,7 +33,12 @@ public class SymbolsManager : MonoBehaviour
     public class TaskSymbolUpdateEvent : UnityEvent<SimpleSymbol>
     {
     }
+    
 
+    #endregion
+
+
+    #region SerializeFields
 
     [SerializeField]
     private List<AlphabetData> _alphabetDatas;
@@ -48,6 +54,9 @@ public class SymbolsManager : MonoBehaviour
 
     [SerializeField]
     private TaskSymbolUpdateEvent _taskSymbolUpdate;
+    
+
+    #endregion
 
     private int _availableSymbolsQuantity;
     private List<SimpleSymbol> _bannedSymbols;
@@ -71,22 +80,21 @@ public class SymbolsManager : MonoBehaviour
         UpdateAvailableSymbols();
     }
 
-
-    //TODO - сделать эту хуйню
     public void UpdateAvailableSymbols()
     {
         if (_bannedSymbols.Count >= Alphabet.Count)
             throw new Exception("The number of available symbols is less than the number of banned symbols");
-        
+
         RandomAvailableSymbols randomAvailableSymbols = new RandomAvailableSymbols();
 
         var symbols = randomAvailableSymbols.Get(Alphabet, _availableSymbolsQuantity);
 
         SimpleSymbol randomTaskSymbol;
-        while (GenerateRandomTaskSymbol(symbols,out randomTaskSymbol)==false)
+        while (GenerateRandomTaskSymbol(symbols, out randomTaskSymbol) == false)
         {
             symbols = randomAvailableSymbols.Get(Alphabet, _availableSymbolsQuantity);
         }
+
         _availableSymbolsUpdated?.Invoke(symbols);
         UpdateTaskSymbol(randomTaskSymbol);
     }
@@ -99,6 +107,7 @@ public class SymbolsManager : MonoBehaviour
             randomSymbol = default;
             return false;
         }
+
         randomSymbol = simpleSymbols[Random.Range(0, simpleSymbols.Count)];
         _bannedSymbols.Add(randomSymbol);
         return true;

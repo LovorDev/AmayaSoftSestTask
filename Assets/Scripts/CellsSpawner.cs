@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using SettingsScripts;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -12,8 +13,6 @@ public class CellsSpawner : MonoBehaviour
 
     [SerializeField]
     private Cell _cellPrefab;
-
-    private Vector2 _cellsGrid;
 
     [SerializeField]
     [Header("Position")]
@@ -55,8 +54,6 @@ public class CellsSpawner : MonoBehaviour
                 _cells.Add(newCell);
             }
         }
-
-        _cellsGrid = difficultySettings.CellsGrid;
         _createdCells?.Invoke(_cells);
     }
 
@@ -64,8 +61,9 @@ public class CellsSpawner : MonoBehaviour
     {
         for (int i = 0; i < _cells.Count; i++)
         {
-            _cells[i].DestroySelf(i*.2f);
+            _cells[i].DestroySelf(i * .2f);
         }
+
         _cells = new List<Cell>();
     }
 

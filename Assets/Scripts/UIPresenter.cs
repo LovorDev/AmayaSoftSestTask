@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using SettingsScripts;
 using TMPro;
 using UnityEngine;
 
@@ -30,8 +29,7 @@ public class UIPresenter : MonoBehaviour
 
         _difficultyName.text = difficultySettings.DifficultyName;
     }
-
-
+    
     public void IncreaseLevel()
     {
         _currentLevel++;

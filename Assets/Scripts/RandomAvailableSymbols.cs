@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class RandomAvailableSymbols
@@ -10,12 +9,6 @@ public class RandomAvailableSymbols
 
         return (List<SimpleSymbol>)indexes;
     }
-
-   
-
-
-
-
 
     private IList<T> RandomSymbols<T>(IEnumerable<T> list, int quantity)
     {

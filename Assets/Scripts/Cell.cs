@@ -33,8 +33,7 @@ public class Cell : MonoBehaviour
         CellAnimation = GetComponent<CellAnimation>();
         CellAnimation.SetCellImageTransform(_symbolImage.transform);
     }
-
-
+    
     private void CallClickedEvent()
     {
         OnButtonClicked?.Invoke(this);
@@ -42,6 +41,7 @@ public class Cell : MonoBehaviour
 
     public void DestroySelf(float delay = 0)
     {
+        _button.interactable = false;
         CellAnimation.Fall(delay).OnComplete(() => Destroy(gameObject,CellAnimation.RightAnswerShakeDuration));
     }
 }

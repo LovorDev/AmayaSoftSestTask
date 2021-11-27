@@ -20,11 +20,7 @@ public class CellSelector : MonoBehaviour
 
     [SerializeField]
     private ParticleSystem _rightParticles;
-    // [SerializeField]
-    // private SelectedCellNameEvent SelectedCellByName;
 
-    // [SerializeField]
-    // private SelectedCellEvent SelectedCell;
     private List<Cell> _cells;
 
     public void SubToCells(List<Cell> cells)
