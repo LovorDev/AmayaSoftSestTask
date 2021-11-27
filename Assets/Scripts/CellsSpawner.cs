@@ -73,12 +73,15 @@ public class CellsSpawner : MonoBehaviour
     {
         var startPointPosition = _startPoint.position;
         var cellPosition = new Vector3(_cellSize.x * point.x, _cellSize.y * point.y);
-        return _pointAlignment switch
+        switch (_pointAlignment)
         {
-            PointAlignment.Zero => startPointPosition + cellPosition,
-            PointAlignment.Center => startPointPosition -
-                (new Vector3(_cellSize.x * grid.x, _cellSize.y * grid.y) / 2) + cellPosition,
-            _ => throw new ArgumentOutOfRangeException()
-        };
+            case PointAlignment.Zero:
+                return startPointPosition + cellPosition;
+            case PointAlignment.Center:
+                return startPointPosition -
+                    (new Vector3(_cellSize.x * grid.x, _cellSize.y * grid.y) / 2) + cellPosition;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
     }
 }
