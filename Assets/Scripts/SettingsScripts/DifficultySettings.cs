@@ -11,8 +11,5 @@ namespace SettingsScripts
         [field: SerializeField]
         public string DifficultyName { get; private set; }
 
-        [field: SerializeField]
-        public int LevelsQuantity { get; private set; }
-    
     }
 }

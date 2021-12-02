@@ -9,7 +9,7 @@ public class SceneRestart : MonoBehaviour
     private SceneRestartAnimation _sceneRestartAnimation;
     
     
-
+    [ContextMenu("Animation")]
     public void ActivateRestartInterface()
     {
         _sceneRestartAnimation.Activate();

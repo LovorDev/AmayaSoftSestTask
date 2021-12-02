@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using SettingsScripts;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -19,7 +20,7 @@ public class CellsSpawner : MonoBehaviour
     private Transform _cellsParent;
 
     [SerializeField]
-    private Transform _startPoint;
+    private RectTransform _startPoint;
 
     [SerializeField]
     private PointAlignment _pointAlignment;
@@ -38,43 +39,43 @@ public class CellsSpawner : MonoBehaviour
     private CreatedCellsEvent _createdCells;
 
     private List<Cell> _cells = new List<Cell>();
+    private Vector2 _currentGrid = Vector2.zero;
 
     public void Spawn(DifficultySettings difficultySettings)
     {
+        SimpleSpawn(difficultySettings.CellsGrid, _currentGrid == Vector2.zero);
+    }
+
+    private void SimpleSpawn(Vector2 grid, bool animationEnabled = true)
+    {
         _cellSize = _cellPrefab.GetComponent<RectTransform>().sizeDelta;
 
-        for (int y = 0; y < difficultySettings.CellsGrid.y; y++)
+        for (int y = (int)_currentGrid.y; y < grid.y; y++)
         {
-            for (int x = 0; x < difficultySettings.CellsGrid.x; x++)
+            for (int x = 0; x < grid.x; x++)
             {
-                var newCell = Instantiate(_cellPrefab, Position(new Vector2(x, y), difficultySettings.CellsGrid),
+                var newCell = Instantiate(_cellPrefab, Position(new Vector2(x, y), grid),
                     Quaternion.identity);
                 newCell.transform.SetParent(_cellsParent, false);
-                newCell.CellAnimation.SetSelfHeightPosition(y + .3f * x + .3f);
+                if (animationEnabled)
+                    newCell.CellAnimation.SetSelfHeightPosition(y + .3f * x + .3f);
                 _cells.Add(newCell);
             }
         }
+
+        _currentGrid = grid;
         _createdCells?.Invoke(_cells);
     }
 
-    public void DeletePrevious()
-    {
-        for (int i = 0; i < _cells.Count; i++)
-        {
-            _cells[i].DestroySelf(i * .2f);
-        }
-
-        _cells = new List<Cell>();
-    }
 
     private Vector3 Position(Vector2 point, Vector2 grid)
     {
-        var startPointPosition = _startPoint.position;
+        var startPointPosition = _startPoint.localPosition;
         var cellPosition = new Vector3(_cellSize.x * point.x, _cellSize.y * point.y);
         switch (_pointAlignment)
         {
             case PointAlignment.Zero:
-                return startPointPosition + cellPosition;
+                return cellPosition + startPointPosition;
             case PointAlignment.Center:
                 return startPointPosition -
                     (new Vector3(_cellSize.x * grid.x, _cellSize.y * grid.y) / 2) + cellPosition;

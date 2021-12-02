@@ -37,13 +37,12 @@ public class Difficulty : MonoBehaviour
     public void IncreaseLevel()
     {
         _currentDifficultyIndex++;
-        
-        if (_currentDifficultyIndex >= _difficultyList.Count)
-        {
-            _winGame?.Invoke();
-            return;
-        }
 
-        _increaseDifficulty?.Invoke(CurrentDifficulty);
+        if (_currentDifficultyIndex >= _difficultyList.Count)
+
+            _winGame?.Invoke();
+
+        else
+            _increaseDifficulty?.Invoke(CurrentDifficulty);
     }
 }

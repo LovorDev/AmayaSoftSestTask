@@ -19,19 +19,9 @@ public class WinChecker : MonoBehaviour
     [SerializeField]
     private WinLevelEvent _completeAllLevels;
 
-    [SerializeField]
-    private NotWinningEvent _completeOneLevels;
-
-    private int _currentLevelsCompleted;
-
-
+    
     public void CheckWin()
     {
-        _currentLevelsCompleted++;
-
-        if (_currentLevelsCompleted < _difficulty.CurrentDifficulty.LevelsQuantity) {_completeOneLevels?.Invoke(); return;}
-        
-        _currentLevelsCompleted = 0;
         _completeAllLevels?.Invoke();
     }
 }

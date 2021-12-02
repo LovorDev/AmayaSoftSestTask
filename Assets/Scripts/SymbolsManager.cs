@@ -19,6 +19,7 @@ public struct SimpleSymbol
 public class SymbolsManager : MonoBehaviour
 {
     #region EventsClasses
+
     [Serializable]
     public class AlphabetUpdatedEvent : UnityEvent<List<SimpleSymbol>>
     {
@@ -33,7 +34,6 @@ public class SymbolsManager : MonoBehaviour
     public class TaskSymbolUpdateEvent : UnityEvent<SimpleSymbol>
     {
     }
-    
 
     #endregion
 
@@ -54,7 +54,6 @@ public class SymbolsManager : MonoBehaviour
 
     [SerializeField]
     private TaskSymbolUpdateEvent _taskSymbolUpdate;
-    
 
     #endregion
 
@@ -75,6 +74,7 @@ public class SymbolsManager : MonoBehaviour
 
     public void OnLevelIncrease(DifficultySettings difficulty)
     {
+        UpdateAlphabet(_alphabetDatas[Random.Range(0, _alphabetDatas.Count)].Alphabet);
         _availableSymbolsQuantity = (int)(difficulty.CellsGrid.x * difficulty.CellsGrid.y);
 
         UpdateAvailableSymbols();
@@ -90,6 +90,7 @@ public class SymbolsManager : MonoBehaviour
         var symbols = randomAvailableSymbols.Get(Alphabet, _availableSymbolsQuantity);
 
         SimpleSymbol randomTaskSymbol;
+
         while (GenerateRandomTaskSymbol(symbols, out randomTaskSymbol) == false)
         {
             symbols = randomAvailableSymbols.Get(Alphabet, _availableSymbolsQuantity);
